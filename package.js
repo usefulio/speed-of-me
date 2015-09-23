@@ -1,24 +1,21 @@
 Package.describe({
   name: 'useful:speed-of-me',
   version: '0.0.1',
-  // Brief, one-line summary of the package.
-  summary: '',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
-  // By default, Meteor will default to using README.md for documentation.
-  // To avoid submitting documentation, set this field to null.
+  summary: 'Loads the Speedof.me API into your Meteor client',
+  git: 'https://github.com/usefulio/speed-of-me.git',
   documentation: 'README.md'
 });
 
 Package.onUse(function(api) {
   api.versionsFrom('1.2.0.1');
   api.use('ecmascript');
-  api.addFiles('speed-of-me.js');
+  api.addFiles('client/speed-of-me.js', 'client');
+  api.export('SpeedOfMe');
 });
 
 Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
   api.use('useful:speed-of-me');
-  api.addFiles('speed-of-me-tests.js');
+  api.addFiles('tests/speed-of-me-tests.js');
 });
