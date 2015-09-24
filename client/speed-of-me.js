@@ -17,18 +17,19 @@ SpeedOfMe = {
 		}
 	}
 	, _initialized: false
+	, _ready: new ReactiveVar(false)
 };
 
 SpeedOfMe.init = function(callbacks){
 	var self = this;
 	if (! this._initialized) {
 	    Tracker.autorun(function(){
-			if (Session.get('speedOfMeLoaded')) {
-        _.each(callbackNames, function(name){
-          if (_.has(callbacks, name)) {
-            SomApi[name] = callbacks[name];
-          }
-        });
+			if (SpeedOfMe.ready()) {
+		        _.each(callbackNames, function(name){
+		          if (_.has(callbacks, name)) {
+		            SomApi[name] = callbacks[name];
+		          }
+		        });
 				self._initialized = true;
 			}
 		});
@@ -42,12 +43,14 @@ SpeedOfMe.startTest = function(){
   SomApi.startTest();
 }
 
-Meteor.startup(function(){
-	Session.set('speedOfMeLoaded', false);
+SpeedOfMe.ready = function(){
+	return SpeedOfMe._ready.get();
+}
 
+Meteor.startup(function(){
 	// Functions to run after the script tag has loaded
 	var onLoad = function(){
-		Session.set('speedOfMeLoaded', true);
+		SpeedOfMe._ready.set(true);
 		if(Meteor.settings.public.speedofme){
 			var speedofme 			= Meteor.settings.public.speedofme;
 			SomApi.account 			= speedofme.account;

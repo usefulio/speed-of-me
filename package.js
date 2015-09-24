@@ -8,7 +8,10 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.2.0.1');
-  api.use('ecmascript');
+  api.use([
+    'ecmascript'
+    , 'reactive-var'
+  ]);
   api.addFiles('client/speed-of-me.js', 'client');
   api.export('SpeedOfMe');
 });
